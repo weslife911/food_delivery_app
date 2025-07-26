@@ -1,13 +1,12 @@
+import { Stack } from 'expo-router'
 import React from 'react'
-import { Text, View } from 'react-native'
 
 function AuthLayout() {
   return (
-    <View>
-      <Text>
-        Auth Layout
-      </Text>
-    </View>
+    <Stack>
+      <Stack.Screen name='index' />
+      <Stack.Screen name='register' />
+    </Stack>
   )
 }
 

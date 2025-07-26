@@ -8,7 +8,6 @@ export default function RootLayout() {
       <SafeAreaProvider>
       <SafeScreen>
         <Stack screenOptions={{ headerShown: false }} >
-          <Stack.Screen name="(splash)" />
           <Stack.Screen name="(auth)" />
         </Stack>
       </SafeScreen>
