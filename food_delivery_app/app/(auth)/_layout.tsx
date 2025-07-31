@@ -1,11 +1,14 @@
 import { Stack } from 'expo-router'
-import React from 'react'
 
 function AuthLayout() {
   return (
-    <Stack>
+    <Stack screenOptions={{ 
+      headerShown: false
+     }} >
       <Stack.Screen name='index' />
       <Stack.Screen name='register' />
+      <Stack.Screen name='verify' />
+      <Stack.Screen name='reset' />
     </Stack>
   )
 }

@@ -7,7 +7,13 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        lowercase: true,
+        match: [/.+@.+\..+/, 'Please fill a valid email address']
+    },
+    role: {
+        type: String,
+        default: "user"
     },
     password: {
         type: String,

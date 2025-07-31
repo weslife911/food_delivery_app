@@ -8,19 +8,19 @@ const registerUser = async(req, res) => {
         const { full_name, email, password } = req.body;
 
         if(!full_name || !email || !password) return res.json({
-            success: true,
+            success: false,
             message: "All fields are required!"
         });
 
         if(password.length < 8) return res.json({
-            success: true,
+            success: false,
             message: "Password must be at least 8 characters!"
         });
 
         const user = await User.findOne({ email });
 
         if(user) return res.json({
-            success: true,
+            success: false,
             message: "User with same email already exists. Try again with different credentials!"
         });
 
@@ -34,7 +34,7 @@ const registerUser = async(req, res) => {
         });
 
         if(!newUser) return res.json({
-            success: true,
+            success: false,
             message: "Error while creating user!"
         });
 
@@ -62,21 +62,21 @@ const loginUser = async(req, res) => {
         const { email, password } = req.body;
 
         if(!email || !password) return res.json({
-            success: true,
+            success: false,
             message: "All fields are required!"
         });
 
         const user = await User.findOne({ email });
 
         if(!user) return res.json({
-            success: true,
+            success: false,
             message: "User with given email does not exist!"
         });
 
         const verifyPassword = await compare(password, user.password);
 
         if(!verifyPassword) return res.json({
-            success: true,
+            success: false,
             message: "Password does not match!"
         });
 
@@ -109,8 +109,37 @@ const checkAuth = async(req, res) => {
     }
 };
 
+const verifyEmail = async(req, res) => {
+    try {
+
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if(!user) return res.json({
+            success: false,
+            message: "Email is not registered in database"
+        });
+
+        const token = genToken(user._id);
+
+        res.json({
+            success: true,
+            message: "Valid Email, Reset password now",
+            token
+        });
+
+    } catch(e) {
+        return res.json({
+            success: false,
+            message: e
+        });
+    }
+};
+
 module.exports = {
     registerUser,
     loginUser,
-    checkAuth
+    checkAuth,
+    verifyEmail
 };

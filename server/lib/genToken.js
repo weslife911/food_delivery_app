@@ -1,10 +1,8 @@
 const jwt = require("jsonwebtoken");
 const {} = require("dotenv");
 
-const genToken = (userId) => {
-    return jwt.sign({ id: userId }, process.env.JWT_SECRET_KEY, {
-        expiresIn: "7d"
-    });
+const genToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET_KEY);
 };
 
 module.exports = genToken;
